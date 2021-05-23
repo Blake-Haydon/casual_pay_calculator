@@ -43,17 +43,12 @@ export default function Home() {
 
   useEffect(() => {
     let urlParams = new URLSearchParams(window.location.search);
-    // urlParams.get("ordinaryRate") ? (setOrdinaryRate(setOrdinaryHours))
 
-    console.log(urlParams.get("ordinaryRate"))
-    console.log(urlParams.get("saturdayRate"))
-    console.log(urlParams.get("sundayRate"))
-    console.log(urlParams.get("publicHolidayRate"))
-
-    console.log(urlParams.get("ordinaryHours"))
-    console.log(urlParams.get("saturdayHours"))
-    console.log(urlParams.get("sundayHours"))
-    console.log(urlParams.get("publicHolidayHours"))
+    // Update the state with the query string on load
+    urlParams.get("ordinaryRate") !== null && safeSet(setOrdinaryRate, urlParams.get("ordinaryRate"));
+    urlParams.get("saturdayRate") !== null && safeSet(setSaturdayRate, urlParams.get("saturdayRate"));
+    urlParams.get("sundayRate") !== null && safeSet(setSundayRate, urlParams.get("sundayRate"));
+    urlParams.get("publicHolidayRate") !== null && safeSet(setPublicHolidayRate, urlParams.get("publicHolidayRate"));
   }, [])
 
   return (
