@@ -61,7 +61,7 @@ export default function Home() {
 
       <main>
         <Container >
-          <h1 style={{ textAlign: "center" }}>Casual Pay Calculator</h1>
+          <h1 className="my-3" style={{ textAlign: "center" }}>Casual Pay Calculator</h1>
 
           {/* Ordinary Rate */}
           <Form>
@@ -136,7 +136,7 @@ export default function Home() {
 
           </Form>
 
-          <h1 style={{ textAlign: "center" }}>Total Pay: ${totalPay.toFixed(2)}</h1>
+          <h2 style={{ textAlign: "right" }}>Total Pay: ${totalPay.toFixed(2)}</h2>
 
         </Container>
       </main>
