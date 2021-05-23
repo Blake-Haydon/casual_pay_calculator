@@ -23,7 +23,7 @@ export default function Home() {
 
   const safeSet = (setFunction: any, value: string | null) => {
     // If the value is valid set it as the new value else ignore the input and don't change state
-    if (parseFloat(value) !== NaN && parseFloat(value) !== null && parseFloat(value) > 0) {
+    if (value !== null && parseFloat(value) !== NaN && parseFloat(value) > 0) {
       setFunction(parseFloat(value))
     }
     else if (value == "") {
