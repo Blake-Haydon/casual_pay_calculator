@@ -72,8 +72,8 @@ export default function Home() {
 
           {/* Ordinary Rate */}
           <Form>
-            <Form.Row>
-              <Form.Group as={Col} md="6">
+            <Form.Row className="my-3 pt-2 px-2" style={{ backgroundColor: "#f2f2f2", borderRadius: "5px" }}>
+              <Form.Group as={Col} md="6" >
                 <Form.Label>Ordinary Rate</Form.Label>
                 <InputGroup>
                   <InputGroup.Prepend>
@@ -89,7 +89,7 @@ export default function Home() {
             </Form.Row>
 
             {/* Saturday Rate */}
-            <Form.Row>
+            <Form.Row className="my-3 pt-2 px-2" style={{ backgroundColor: "#f2f2f2", borderRadius: "5px" }}>
               <Form.Group as={Col} md="6">
                 <Form.Label>Saturday Rate</Form.Label>
                 <InputGroup>
@@ -106,8 +106,8 @@ export default function Home() {
             </Form.Row>
 
             {/* Sunday Rate */}
-            <Form.Row>
-              <Form.Group as={Col} md="6">
+            <Form.Row className="my-3 pt-2 px-2" style={{ backgroundColor: "#f2f2f2", borderRadius: "5px" }}>
+              <Form.Group as={Col} md="6" >
                 <Form.Label>Sunday Rate</Form.Label>
                 <InputGroup>
                   <InputGroup.Prepend>
@@ -123,8 +123,8 @@ export default function Home() {
             </Form.Row>
 
             {/* Public Holiday Rate */}
-            <Form.Row>
-              <Form.Group as={Col} md="6">
+            <Form.Row className="my-3 pt-2 px-2" style={{ backgroundColor: "#f2f2f2", borderRadius: "5px" }}>
+              <Form.Group as={Col} md="6" >
                 <Form.Label>Holiday Rate</Form.Label>
                 <InputGroup>
                   <InputGroup.Prepend>
