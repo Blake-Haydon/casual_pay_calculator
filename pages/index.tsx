@@ -21,9 +21,9 @@ export default function Home() {
   // State variable to store the total pay
   const [totalPay, setTotalPay] = useState(0);
 
-  const safeSet = (setFunction: any, value: string) => {
+  const safeSet = (setFunction: any, value: string | null) => {
     // If the value is valid set it as the new value else ignore the input and don't change state
-    if (parseFloat(value) !== NaN && parseFloat(value) > 0) {
+    if (parseFloat(value) !== NaN && parseFloat(value) !== null && parseFloat(value) > 0) {
       setFunction(parseFloat(value))
     }
     else if (value == "") {
@@ -80,8 +80,6 @@ export default function Home() {
                 <Form.Control value={ordinaryHours} type="number" onChange={event => safeSet(setOrdinaryHours, event.target.value)} />
               </Form.Group>
             </Form.Row>
-
-
 
             {/* Saturday Rate */}
             <Form.Row>
