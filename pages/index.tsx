@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
 export default function Home() {
@@ -20,6 +21,16 @@ export default function Home() {
   // State variable to store the total pay
   const [totalPay, setTotalPay] = useState(0);
 
+  const safeSet = (setFunction: any, value: string) => {
+    // If the value is valid set it as the new value else ignore the input and don't change state
+    if (parseFloat(value) !== NaN && parseFloat(value) > 0) {
+      setFunction(parseFloat(value))
+    }
+    else if (value == "") {
+      setFunction(0)
+    }
+  }
+
   useEffect(() => {
     setTotalPay(
       ordinaryRate * ordinaryHours
@@ -29,6 +40,21 @@ export default function Home() {
     )
     // Update the total cost only if the hours or rates change
   }, [ordinaryRate, ordinaryHours, saturdayRate, saturdayHours, sundayRate, sundayHours, publicHolidayRate, publicHolidayHours])
+
+  useEffect(() => {
+    let urlParams = new URLSearchParams(window.location.search);
+    // urlParams.get("ordinaryRate") ? (setOrdinaryRate(setOrdinaryHours))
+
+    console.log(urlParams.get("ordinaryRate"))
+    console.log(urlParams.get("saturdayRate"))
+    console.log(urlParams.get("sundayRate"))
+    console.log(urlParams.get("publicHolidayRate"))
+
+    console.log(urlParams.get("ordinaryHours"))
+    console.log(urlParams.get("saturdayHours"))
+    console.log(urlParams.get("sundayHours"))
+    console.log(urlParams.get("publicHolidayHours"))
+  }, [])
 
   return (
     <div>
@@ -45,18 +71,18 @@ export default function Home() {
           {/* Ordinary Rate */}
           <Form>
             <Form.Row>
-              <Form.Group>
-                <Form.Label>Ordinary</Form.Label>
+              <Form.Group as={Col} md="6">
+                <Form.Label>Ordinary Rate</Form.Label>
                 <InputGroup>
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <Form.Control value={ordinaryRate} type="number" onChange={event => setOrdinaryRate(parseFloat(event.target.value))} />
+                  <Form.Control value={ordinaryRate} type="number" onChange={event => safeSet(setOrdinaryRate, event.target.value)} />
                 </InputGroup>
               </Form.Group>
-              <Form.Group>
-                <Form.Label>Hours</Form.Label>
-                <Form.Control value={ordinaryHours} type="number" onChange={event => setOrdinaryHours(parseFloat(event.target.value))} />
+              <Form.Group as={Col} md="6">
+                <Form.Label>Hours Worked</Form.Label>
+                <Form.Control value={ordinaryHours} type="number" onChange={event => safeSet(setOrdinaryHours, event.target.value)} />
               </Form.Group>
             </Form.Row>
 
@@ -64,59 +90,58 @@ export default function Home() {
 
             {/* Saturday Rate */}
             <Form.Row>
-              <Form.Group>
-                <Form.Label>Saturday</Form.Label>
+              <Form.Group as={Col} md="6">
+                <Form.Label>Saturday Rate</Form.Label>
                 <InputGroup>
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <Form.Control value={saturdayRate} type="number" onChange={event => setSaturdayRate(parseFloat(event.target.value))} />
+                  <Form.Control value={saturdayRate} type="number" onChange={event => safeSet(setSaturdayRate, event.target.value)} />
                 </InputGroup>
               </Form.Group>
-              <Form.Group>
-                <Form.Label>Hours</Form.Label>
-                <Form.Control value={saturdayHours} type="number" onChange={event => setSaturdayHours(parseFloat(event.target.value))} />
+              <Form.Group as={Col} md="6">
+                <Form.Label>Hours Worked</Form.Label>
+                <Form.Control value={saturdayHours} type="number" onChange={event => safeSet(setSaturdayHours, event.target.value)} />
               </Form.Group>
             </Form.Row>
 
             {/* Sunday Rate */}
             <Form.Row>
-              <Form.Group>
-                <Form.Label>Sunday</Form.Label>
+              <Form.Group as={Col} md="6">
+                <Form.Label>Sunday Rate</Form.Label>
                 <InputGroup>
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <Form.Control value={sundayRate} type="number" onChange={event => setSundayRate(parseFloat(event.target.value))} />
+                  <Form.Control value={sundayRate} type="number" onChange={event => safeSet(setSundayRate, event.target.value)} />
                 </InputGroup>
               </Form.Group>
-              <Form.Group>
-                <Form.Label>Hours</Form.Label>
-                <Form.Control value={sundayHours} type="number" onChange={event => setSundayHours(parseFloat(event.target.value))} />
+              <Form.Group as={Col} md="6">
+                <Form.Label>Hours Worked</Form.Label>
+                <Form.Control value={sundayHours} type="number" onChange={event => safeSet(setSundayHours, event.target.value)} />
               </Form.Group>
             </Form.Row>
 
             {/* Public Holiday Rate */}
             <Form.Row>
-              <Form.Group>
-                <Form.Label>Holiday</Form.Label>
+              <Form.Group as={Col} md="6">
+                <Form.Label>Holiday Rate</Form.Label>
                 <InputGroup>
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <Form.Control value={publicHolidayRate} type="number" onChange={event => setPublicHolidayRate(parseFloat(event.target.value))} />
+                  <Form.Control value={publicHolidayRate} type="number" onChange={event => safeSet(setPublicHolidayRate, event.target.value)} />
                 </InputGroup>
               </Form.Group>
-              <Form.Group>
-                <Form.Label>Hours</Form.Label>
-                <Form.Control value={publicHolidayHours} type="number" onChange={event => setPublicHolidayHours(parseFloat(event.target.value))} />
+              <Form.Group as={Col} md="6">
+                <Form.Label>Hours Worked</Form.Label>
+                <Form.Control value={publicHolidayHours} type="number" onChange={event => safeSet(setPublicHolidayHours, event.target.value)} />
               </Form.Group>
             </Form.Row>
 
           </Form>
 
-
-          <h1>Total Pay: ${totalPay.toFixed(2)}</h1>
+          <h1 style={{ textAlign: "center" }}>Total Pay: ${totalPay.toFixed(2)}</h1>
 
         </Container>
       </main>
