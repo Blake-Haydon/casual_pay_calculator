@@ -7,36 +7,43 @@ import Container from 'react-bootstrap/Container'
 
 export default function Home() {
   // Rates of pay state variables
-  const [ordinaryRate, setOrdinaryRate] = useState(0);
-  const [saturdayRate, setSaturdayRate] = useState(0);
-  const [sundayRate, setSundayRate] = useState(0);
-  const [publicHolidayRate, setPublicHolidayRate] = useState(0);
+  const [ordinaryRate, setOrdinaryRate] = useState("0");
+  const [saturdayRate, setSaturdayRate] = useState("0");
+  const [sundayRate, setSundayRate] = useState("0");
+  const [publicHolidayRate, setPublicHolidayRate] = useState("0");
 
   // Number of hours worked state variables
-  const [ordinaryHours, setOrdinaryHours] = useState(0);
-  const [saturdayHours, setSaturdayHours] = useState(0);
-  const [sundayHours, setSundayHours] = useState(0);
-  const [publicHolidayHours, setPublicHolidayHours] = useState(0);
+  const [ordinaryHours, setOrdinaryHours] = useState("0");
+  const [saturdayHours, setSaturdayHours] = useState("0");
+  const [sundayHours, setSundayHours] = useState("0");
+  const [publicHolidayHours, setPublicHolidayHours] = useState("0");
 
   // State variable to store the total pay
   const [totalPay, setTotalPay] = useState(0);
 
   const safeSet = (setFunction: any, value: string | null) => {
     // If the value is valid set it as the new value else ignore the input and don't change state
-    if (value !== null && parseFloat(value) !== NaN && parseFloat(value) > 0) {
-      setFunction(parseFloat(value))
+    if (value !== null && parseFloat(value) !== NaN && parseFloat(value) >= 0) {
+      setFunction(value)
     }
     else if (value == "") {
-      setFunction(0)
+      setFunction("")
     }
+  }
+
+  const parseFloatNoNaN = (value: string): number => {
+    if (value == "") {
+      return 0
+    }
+    return parseFloat(value)
   }
 
   useEffect(() => {
     setTotalPay(
-      ordinaryRate * ordinaryHours
-      + saturdayRate * saturdayHours
-      + sundayRate * sundayHours
-      + publicHolidayRate * publicHolidayHours
+      parseFloatNoNaN(ordinaryRate) * parseFloatNoNaN(ordinaryHours)
+      + parseFloatNoNaN(saturdayRate) * parseFloatNoNaN(saturdayHours)
+      + parseFloatNoNaN(sundayRate) * parseFloatNoNaN(sundayHours)
+      + parseFloatNoNaN(publicHolidayRate) * parseFloatNoNaN(publicHolidayHours)
     )
     // Update the total cost only if the hours or rates change
   }, [ordinaryRate, ordinaryHours, saturdayRate, saturdayHours, sundayRate, sundayHours, publicHolidayRate, publicHolidayHours])
