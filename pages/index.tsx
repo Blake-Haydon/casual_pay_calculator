@@ -3,9 +3,13 @@ import Head from 'next/head'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function Home() {
+  const WEBSITE_DOMAIN = "https://pay.calculator.haydon.dev"
+
   // Rates of pay state variables
   const [ordinaryRate, setOrdinaryRate] = useState("0");
   const [saturdayRate, setSaturdayRate] = useState("0");
@@ -20,6 +24,7 @@ export default function Home() {
 
   // State variable to store the total pay
   const [totalPay, setTotalPay] = useState(0);
+  const [totalTax, setTotalTax] = useState(0);
 
   const safeSet = (setFunction: any, value: string | null) => {
     // If the value is valid set it as the new value else ignore the input and don't change state
@@ -39,12 +44,17 @@ export default function Home() {
   }
 
   useEffect(() => {
-    setTotalPay(
+    let totalPayWithTax =
       parseFloatNoNaN(ordinaryRate) * parseFloatNoNaN(ordinaryHours)
       + parseFloatNoNaN(saturdayRate) * parseFloatNoNaN(saturdayHours)
       + parseFloatNoNaN(sundayRate) * parseFloatNoNaN(sundayHours)
-      + parseFloatNoNaN(publicHolidayRate) * parseFloatNoNaN(publicHolidayHours)
-    )
+      + parseFloatNoNaN(publicHolidayRate) * parseFloatNoNaN(publicHolidayHours);
+
+    let totalTax = 0.1 * totalPayWithTax;
+
+    setTotalPay(totalPayWithTax);
+    setTotalTax(totalTax);
+
     // Update the total cost only if the hours or rates change
   }, [ordinaryRate, ordinaryHours, saturdayRate, saturdayHours, sundayRate, sundayHours, publicHolidayRate, publicHolidayHours])
 
@@ -141,12 +151,40 @@ export default function Home() {
 
           </Form>
 
-          <h2 style={{ textAlign: "right" }}>Total Pay: ${totalPay.toFixed(2)}</h2>
+          <Row>
+            <Col md="6" className="my-3">
+              <button onClick={() => {
+                // Function that exports the 
+                let exportedQueryRates = new URLSearchParams();
 
+                // Append all of the rate data to the query string
+                exportedQueryRates.append("ordinaryRate", (parseFloatNoNaN(ordinaryRate)).toString());
+                exportedQueryRates.append("saturdayRate", (parseFloatNoNaN(saturdayRate)).toString());
+                exportedQueryRates.append("sundayRate", (parseFloatNoNaN(sundayRate)).toString());
+                exportedQueryRates.append("publicHolidayRate", (parseFloatNoNaN(publicHolidayRate)).toString());
+
+                // Create the URL 
+                const exportedRatesURL = WEBSITE_DOMAIN + "?" + exportedQueryRates.toString();
+
+                // Copy the URL to the clipboard and present a toast to the user
+                navigator.clipboard.writeText(exportedRatesURL);
+                toast.success('Link Copied to Clipboard');
+              }}>
+                Export Pay Rates
+              </button>
+            </Col>
+            <Col md="6" className="my-3">
+              <h2 style={{ textAlign: "right", color: "green" }}>Total Pay: ${totalPay.toFixed(2)}</h2>
+              <h2 style={{ textAlign: "right", color: "red" }}>Total Tax: ${totalTax.toFixed(2)}</h2>
+            </Col>
+          </Row>
         </Container>
       </main>
 
       {/* TODO: ADD FOOTER */}
-    </div >
+
+      {/* Add Hot Toast react element for export button */}
+      <Toaster position="bottom-center" />
+    </div>
   )
 }
