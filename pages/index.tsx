@@ -45,16 +45,53 @@ export default function Home() {
   }
 
   useEffect(() => {
-    let totalPayWithTax =
+    const MEDICARE_LEVY = 0.02;
+
+    const totalWeeklyPayWithTax =
       parseFloatNoNaN(ordinaryRate) * parseFloatNoNaN(ordinaryHours)
       + parseFloatNoNaN(saturdayRate) * parseFloatNoNaN(saturdayHours)
       + parseFloatNoNaN(sundayRate) * parseFloatNoNaN(sundayHours)
       + parseFloatNoNaN(publicHolidayRate) * parseFloatNoNaN(publicHolidayHours);
 
-    let totalTax = 0.1 * totalPayWithTax;
+    // THIS IS BASED OFF THE CURRENT TAX YEAR IN AUSTRALIA (2020–21 Resident tax rates) 
+    const totalYearlyPayWithTax = 52 * totalWeeklyPayWithTax;
+    let totalYearlyTax;
 
-    setTotalPay(totalPayWithTax);
-    setTotalTax(totalTax);
+    // Nil
+    // 0 – $18,200
+    if (totalYearlyPayWithTax <= 18200) {
+      totalYearlyTax = 0;
+    }
+
+    // 19 cents for each $1 over $18,200
+    // $18,201 – $45,000
+    else if (totalYearlyPayWithTax <= 45000) {
+      totalYearlyTax = (totalYearlyPayWithTax - 18200) * 0.19 + totalYearlyPayWithTax * MEDICARE_LEVY;
+    }
+
+    // $5,092 plus 32.5 cents for each $1 over $45,000
+    // $45,001 – $120,000
+    else if (totalYearlyPayWithTax <= 120000) {
+      totalYearlyTax = 5092 + (totalYearlyPayWithTax - 45000) + totalYearlyPayWithTax * MEDICARE_LEVY;
+    }
+
+    // $29,467 plus 37 cents for each $1 over $120,000
+    // $120,001 – $180,000
+    else if (totalYearlyPayWithTax <= 180000) {
+      totalYearlyTax = 29467 + (totalYearlyPayWithTax - 120000) * 0.37 + totalYearlyPayWithTax * MEDICARE_LEVY;
+    }
+
+    // $51,667 plus 45 cents for each $1 over $180,000
+    // $180,001 and over
+    else {
+      totalYearlyTax = 51667 + (totalYearlyPayWithTax - 180000) * 0.45 + totalYearlyPayWithTax * MEDICARE_LEVY;
+    }
+
+    const totalWeeklyTax = totalYearlyTax / 52
+    const totalWeeklyPayMinusTax = totalWeeklyPayWithTax - totalWeeklyTax
+
+    setTotalPay(totalWeeklyPayMinusTax);
+    setTotalTax(totalWeeklyTax);
 
     // Update the total cost only if the hours or rates change
   }, [ordinaryRate, ordinaryHours, saturdayRate, saturdayHours, sundayRate, sundayHours, publicHolidayRate, publicHolidayHours])
@@ -79,7 +116,9 @@ export default function Home() {
 
       <main>
         <Container >
-          <h1 className="my-3" style={{ textAlign: "center" }}>Casual Pay Calculator</h1>
+          <h1 className="my-3" style={{ textAlign: "center" }}>
+            Weekly Casual Pay Calculator
+          </h1>
 
           {/* Ordinary Rate */}
           <Form>
@@ -154,7 +193,7 @@ export default function Home() {
 
           <Row>
             <Col md="6" className="my-3">
-              <Button variant="outline-primary" onClick={() => {
+              <Button variant="primary" onClick={() => {
                 // Function that exports the 
                 let exportedQueryRates = new URLSearchParams();
 
@@ -177,6 +216,7 @@ export default function Home() {
             <Col md="6" className="my-3">
               <h2 style={{ textAlign: "right", color: "green" }}>Total Pay: ${totalPay.toFixed(2)}</h2>
               <h2 style={{ textAlign: "right", color: "red" }}>Total Tax: ${totalTax.toFixed(2)}</h2>
+              <h2 className="mt-2" style={{ textAlign: "right" }}>Gross Pay: ${(totalPay + totalTax).toFixed(2)}</h2>
             </Col>
           </Row>
         </Container>
