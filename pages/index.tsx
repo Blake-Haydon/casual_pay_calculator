@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
@@ -153,7 +154,7 @@ export default function Home() {
 
           <Row>
             <Col md="6" className="my-3">
-              <button onClick={() => {
+              <Button variant="outline-primary" onClick={() => {
                 // Function that exports the 
                 let exportedQueryRates = new URLSearchParams();
 
@@ -170,8 +171,8 @@ export default function Home() {
                 navigator.clipboard.writeText(exportedRatesURL);
                 toast.success('Link Copied to Clipboard');
               }}>
-                Export Pay Rates
-              </button>
+                Copy Pay Rate Link
+              </Button>
             </Col>
             <Col md="6" className="my-3">
               <h2 style={{ textAlign: "right", color: "green" }}>Total Pay: ${totalPay.toFixed(2)}</h2>
