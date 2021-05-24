@@ -5,6 +5,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import Table from 'react-bootstrap/Table'
 import Container from 'react-bootstrap/Container'
 import toast, { Toaster } from 'react-hot-toast'
 
@@ -214,9 +215,22 @@ export default function Home() {
               </Button>
             </Col>
             <Col md="6" className="my-3">
-              <h2 style={{ textAlign: "right", color: "green" }}>Total Pay: ${totalPay.toFixed(2)}</h2>
-              <h2 style={{ textAlign: "right", color: "red" }}>Total Tax: ${totalTax.toFixed(2)}</h2>
-              <h2 className="mt-2" style={{ textAlign: "right" }}>Gross Pay: ${(totalPay + totalTax).toFixed(2)}</h2>
+              <Table bordered hover>
+                <tbody>
+                  <tr>
+                    <td style={{ color: "green" }}>Total Pay</td>
+                    <td style={{ textAlign: "right" }}>${totalPay.toFixed(2)}</td>
+                  </tr>
+                  <tr>
+                    <td style={{ color: "red" }}>Total Tax</td>
+                    <td style={{ textAlign: "right" }}>${totalTax.toFixed(2)}</td>
+                  </tr>
+                  <tr>
+                    <td>Gross Pay</td>
+                    <td style={{ textAlign: "right" }}>${(totalPay + totalTax).toFixed(2)}</td>
+                  </tr>
+                </tbody>
+              </Table>
             </Col>
           </Row>
         </Container>
