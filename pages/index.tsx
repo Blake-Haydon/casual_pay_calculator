@@ -63,11 +63,12 @@ export default function Home() {
       localStorage.getItem("publicHolidayRate") !== null && safeSet(setPublicHolidayRate, localStorage.getItem("publicHolidayRate"));
     }
 
-    // Set hours
-    urlParams.get("ordinaryHours") !== null && safeSet(setOrdinaryHours, urlParams.get("ordinaryHours"));
-    urlParams.get("saturdayHours") !== null && safeSet(setSaturdayHours, urlParams.get("saturdayHours"));
-    urlParams.get("sundayHours") !== null && safeSet(setSundayHours, urlParams.get("sundayHours"));
-    urlParams.get("publicHolidayHours") !== null && safeSet(setPublicHolidayHours, urlParams.get("publicHolidayHours"));
+    // Set hours from local storage
+    localStorage.getItem("ordinaryHours") !== null && safeSet(setOrdinaryHours, localStorage.getItem("ordinaryHours"));
+    localStorage.getItem("saturdayHours") !== null && safeSet(setSaturdayHours, localStorage.getItem("saturdayHours"));
+    localStorage.getItem("sundayHours") !== null && safeSet(setSundayHours, localStorage.getItem("sundayHours"));
+    localStorage.getItem("publicHolidayHours") !== null && safeSet(setPublicHolidayHours, localStorage.getItem("publicHolidayHours"));
+
   }, [])
 
   useEffect(() => {
