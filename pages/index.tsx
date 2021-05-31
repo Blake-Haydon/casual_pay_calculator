@@ -46,6 +46,42 @@ export default function Home() {
   }
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Update the state with the query string on load if there are parameters, these should take precedence over the local state
+    if (Array.from(urlParams).length !== 0) {
+      urlParams.get("ordinaryRate") !== null && safeSet(setOrdinaryRate, urlParams.get("ordinaryRate"));
+      urlParams.get("saturdayRate") !== null && safeSet(setSaturdayRate, urlParams.get("saturdayRate"));
+      urlParams.get("sundayRate") !== null && safeSet(setSundayRate, urlParams.get("sundayRate"));
+      urlParams.get("publicHolidayRate") !== null && safeSet(setPublicHolidayRate, urlParams.get("publicHolidayRate"));
+    }
+    // Update rates with local storage
+    else {
+      localStorage.getItem("ordinaryRate") !== null && safeSet(setOrdinaryRate, localStorage.getItem("ordinaryRate"));
+      localStorage.getItem("saturdayRate") !== null && safeSet(setSaturdayRate, localStorage.getItem("saturdayRate"));
+      localStorage.getItem("sundayRate") !== null && safeSet(setSundayRate, localStorage.getItem("sundayRate"));
+      localStorage.getItem("publicHolidayRate") !== null && safeSet(setPublicHolidayRate, localStorage.getItem("publicHolidayRate"));
+    }
+
+    // Set hours
+    urlParams.get("ordinaryHours") !== null && safeSet(setOrdinaryHours, urlParams.get("ordinaryHours"));
+    urlParams.get("saturdayHours") !== null && safeSet(setSaturdayHours, urlParams.get("saturdayHours"));
+    urlParams.get("sundayHours") !== null && safeSet(setSundayHours, urlParams.get("sundayHours"));
+    urlParams.get("publicHolidayHours") !== null && safeSet(setPublicHolidayHours, urlParams.get("publicHolidayHours"));
+  }, [])
+
+  useEffect(() => {
+    // Save the current values to local storage
+    localStorage.setItem("ordinaryRate", ordinaryRate);
+    localStorage.setItem("saturdayRate", saturdayRate);
+    localStorage.setItem("sundayRate", sundayRate);
+    localStorage.setItem("publicHolidayRate", publicHolidayRate);
+    localStorage.setItem("ordinaryHours", ordinaryHours);
+    localStorage.setItem("saturdayHours", saturdayHours);
+    localStorage.setItem("sundayHours", sundayHours);
+    localStorage.setItem("publicHolidayHours", publicHolidayHours);
+
+    // Perform the tax calculations
     const MEDICARE_LEVY = 0.02;
 
     const totalWeeklyPayWithTax =
@@ -97,15 +133,6 @@ export default function Home() {
     // Update the total cost only if the hours or rates change
   }, [ordinaryRate, ordinaryHours, saturdayRate, saturdayHours, sundayRate, sundayHours, publicHolidayRate, publicHolidayHours])
 
-  useEffect(() => {
-    let urlParams = new URLSearchParams(window.location.search);
-
-    // Update the state with the query string on load
-    urlParams.get("ordinaryRate") !== null && safeSet(setOrdinaryRate, urlParams.get("ordinaryRate"));
-    urlParams.get("saturdayRate") !== null && safeSet(setSaturdayRate, urlParams.get("saturdayRate"));
-    urlParams.get("sundayRate") !== null && safeSet(setSundayRate, urlParams.get("sundayRate"));
-    urlParams.get("publicHolidayRate") !== null && safeSet(setPublicHolidayRate, urlParams.get("publicHolidayRate"));
-  }, [])
 
   return (
     <div>
