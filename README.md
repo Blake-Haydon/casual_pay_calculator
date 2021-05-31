@@ -6,8 +6,9 @@ A simple web tool to quickly calculate weekly casual work pay.
 
 
 ### Save Rates and Hours Locally ⏰
-    TODO: add feature gif here
+![local storage saving demo gif](./README/demo_localstorage.gif)
 
+*Hours worked and current rates are saved locally*
 
 ### Import and Export Pay Rates With a Link 📤
 ![importing and exporting rates demo gif](./README/demo_rates_copy_paste.gif)
