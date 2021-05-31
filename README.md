@@ -1,17 +1,20 @@
-# Casual Pay Calculator
+# Weekly Casual Pay Calculator
 
-A simple web tool to quickly calculate casual work pay.
+A simple web tool to quickly calculate weekly casual work pay.
 
 ## Features
 
-### Locally Saved Hours and Rates 
+### Save Rates and Hours Locally ⏰
     TODO: add feature gif here
 
-### Easy Import of Pay Rates
+### Import Pay Rates 📥
     TODO: add feature gif here
 
-### Easy Export of Pay Rates
+### Export Pay Rates 📤
     TODO: add feature gif here
 
-### Tax Calculation
+### Tax Calculation 🧾
     TODO: add feature gif here 
+
+### No Tracking 🚫
+No creepy tracking or 3rd party cookies included, just raw HTML and javascript. No information ever leaves your device. 
