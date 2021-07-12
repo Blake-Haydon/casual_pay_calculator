@@ -137,7 +137,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Casual Pay Calculator</title>
+        <title>Pay Calculator</title>
         <meta name="description" content="Simple Weekly Casual Pay Calculator" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -145,7 +145,7 @@ export default function Home() {
       <main>
         <Container >
           <h1 className="my-3" style={{ textAlign: "center" }}>
-            Weekly Casual Pay Calculator
+            Weekly Pay Calculator
           </h1>
 
           {/* Ordinary Rate */}

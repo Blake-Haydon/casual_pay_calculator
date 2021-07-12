@@ -1,6 +1,6 @@
-# Weekly Casual Pay Calculator
+# Weekly Pay Calculator
 
-A simple web tool to quickly calculate weekly casual work pay.
+A simple web tool to quickly calculate weekly work pay.
 
 ## Features
 
